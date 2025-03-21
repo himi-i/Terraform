@@ -57,8 +57,8 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
       with:
-        aws-access-key-id: ${{ secrets.TF_DEV_JUNG9546_AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.TF_DEV_JUNG9546_AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
     - name: Check and Initialize Terraform Backend
@@ -142,8 +142,8 @@ jobs:
 
       - name: Terraform Backend Init
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.TF_DEV_JUNG9546_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_DEV_JUNG9546_AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           cd terraform_stage; terraform init \
             -backend-config="region=ap-northeast-2" \
@@ -169,8 +169,8 @@ jobs:
 
       - name: Terraform Init for Destroy
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.TF_DEV_JUNG9546_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_DEV_JUNG9546_AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           cd terraform_stage; terraform init \
             -backend-config="region=ap-northeast-2" \
@@ -180,7 +180,7 @@ jobs:
       - name: Terraform Destroy
         if: ${{ github.event.inputs.confirm_destroy == 'DESTROY' }}
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.TF_DEV_JUNG9546_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.TF_DEV_JUNG9546_AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           cd terraform_stage; terraform destroy -auto-approve
