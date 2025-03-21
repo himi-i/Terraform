@@ -72,7 +72,7 @@ jobs:
           }
 
           # Terraform 상태 관리를 위한 S3 버킷과 DynamoDB 테이블 이름
-          S3_BUCKET="terraform1233"
+          S3_BUCKET="terraform13579"
           DYNAMODB_TABLE="terraform1232"
 
           # 버킷과 테이블의 존재 여부를 확인
