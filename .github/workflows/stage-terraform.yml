@@ -17,7 +17,7 @@ on:
         default: 'DESTROY'
 
 env:
-  AWS_REGION: ap-northeast-2   # set this to your preferred AWS region, e.g. us-west-12
+  AWS_REGION: ap-northeast-2   # set this to your preferred AWS region
 
 jobs:
   terraform:
