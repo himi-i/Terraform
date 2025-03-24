@@ -99,6 +99,7 @@ jobs:
               exit 1
           fi
 
+          /*
           # Terraform 초기화 및 적용
           if [ "$BUCKET_EXISTS" = "true" ] && [ "$DYNAMODB_EXISTS" = "true" ]; then
               echo "Both S3 bucket and DynamoDB table exist. Skipping Terraform init."
@@ -112,12 +113,28 @@ jobs:
               terraform apply -auto-approve
           fi
 
+          */
+
+          # Terraform 초기화 및 적용
+          if [ "$BUCKET_EXISTS" = "true" ]; then
+              echo "S3 bucket exists. Skipping Terraform init."
+          elif [ "$BUCKET_EXISTS" = "access denied" ]; then
+              echo "Access denied when checking S3 bucket. Please check your AWS credentials and permissions."
+              exit 1
+          else
+              echo "Initializing Terraform because the S3 bucket does not exist."
+              terraform init
+              terraform plan
+              terraform apply -auto-approve
+          fi
+
+
       # Run Terraform init before plan and apply
       - name: Terraform Init and Plan
         run: |
           cd terraform_stage
           terraform init -reconfigure -backend-config="region=ap-northeast-2" \
-            -backend-config="bucket=terraform1232" \
+            -backend-config="bucket=terraform13579" \
             -backend-config="key=stage/terraform/terraform.tfstate"
           terraform plan -input=false
 
@@ -143,7 +160,7 @@ jobs:
         run: |
           cd terraform_stage; terraform init \
             -backend-config="region=ap-northeast-2" \
-            -backend-config="bucket=terraform1232" \
+            -backend-config="bucket=terraform13579" \
             -backend-config="key=stage/terraform/terraform.tfstate"
 
   backend_destroy:
@@ -170,7 +187,7 @@ jobs:
         run: |
           cd terraform_stage; terraform init \
             -backend-config="region=ap-northeast-2" \
-            -backend-config="bucket=terraform1232" \
+            -backend-config="bucket=terraform13579" \
             -backend-config="key=stage/terraform/terraform.tfstate"
 
       - name: Terraform Destroy
