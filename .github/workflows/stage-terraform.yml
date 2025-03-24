@@ -58,26 +58,38 @@ jobs:
                   echo "true"
               fi
           }
+          
 
-          check_dynamodb_exists() {
-            TABLE_NAME="$1"
-            output=$(aws dynamodb describe-table --table-name "$TABLE_NAME" 2>&1)
-            if echo "$output" | grep -q 'ResourceNotFoundException'; then
-                echo "false"
-            elif echo "$output" | grep -q 'AccessDeniedException'; then
-                echo "access denied"
-            else
-                echo "true"
-            fi
+          /*
+          check_mysql_connection() {
+              MYSQL_HOST="$1"
+              MYSQL_USER="$2"
+              MYSQL_PASS="$3"
+              output=$(mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASS" -e "SHOW TABLES;" 2>&1)
+              if echo "$output" | grep -q 'ERROR'; then
+                  echo "false"
+              else
+                  echo "true"
+              fi
           }
+          */
 
-          # Terraform 상태 관리를 위한 S3 버킷과 DynamoDB 테이블 이름
+          # Terraform 상태 관리를 위한 S3 버킷 및 MySQL 연결 정보
           S3_BUCKET="terraform13579"
-          DYNAMODB_TABLE="terraform1232"
 
-          # 버킷과 테이블의 존재 여부를 확인
-          BUCKET_EXISTS=$(check_bucket_exists "$S3_BUCKET")
-          DYNAMODB_EXISTS=$(check_dynamodb_exists "$DYNAMODB_TABLE")
+          /*
+          MYSQL_HOST="mysql.example.com"  # RDS MySQL endpoint
+          MYSQL_USER="admin"
+          MYSQL_PASS="yourpassword"  # MySQL password
+          */
+
+          # S3 버킷 및 MySQL 연결 확인
+          BUCKET_EXISTS=$(check_s3_bucket_exists "$S3_BUCKET")
+
+          /*
+          MYSQL_EXISTS=$(check_mysql_connection "$MYSQL_HOST" "$MYSQL_USER" "$MYSQL_PASS")
+          */
+
 
           # Terraform 명령을 실행할 디렉터리로 이동
           if [ -d backend ]; then
