@@ -47,7 +47,7 @@ jobs:
       - name: Check and Initialize Terraform Backend
         run: |
           #!/bin/bash
-          check_bucket_exists() {
+          check_s3_bucket_exists() {
               BUCKET_NAME="$1"
               output=$(aws s3 ls "s3://$BUCKET_NAME" 2>&1)
               if echo "$output" | grep -q 'NoSuchBucket'; then
@@ -60,35 +60,15 @@ jobs:
           }
           
 
-          /*
-          check_mysql_connection() {
-              MYSQL_HOST="$1"
-              MYSQL_USER="$2"
-              MYSQL_PASS="$3"
-              output=$(mysql -h "$MYSQL_HOST" -u "$MYSQL_USER" -p"$MYSQL_PASS" -e "SHOW TABLES;" 2>&1)
-              if echo "$output" | grep -q 'ERROR'; then
-                  echo "false"
-              else
-                  echo "true"
-              fi
-          }
-          */
-
+      
           # Terraform 상태 관리를 위한 S3 버킷 및 MySQL 연결 정보
           S3_BUCKET="terraform13579"
 
-          /*
-          MYSQL_HOST="mysql.example.com"  # RDS MySQL endpoint
-          MYSQL_USER="admin"
-          MYSQL_PASS="yourpassword"  # MySQL password
-          */
-
+        
           # S3 버킷 및 MySQL 연결 확인
           BUCKET_EXISTS=$(check_s3_bucket_exists "$S3_BUCKET")
 
-          /*
-          MYSQL_EXISTS=$(check_mysql_connection "$MYSQL_HOST" "$MYSQL_USER" "$MYSQL_PASS")
-          */
+    
 
 
           # Terraform 명령을 실행할 디렉터리로 이동
@@ -99,21 +79,7 @@ jobs:
               exit 1
           fi
 
-          /*
-          # Terraform 초기화 및 적용
-          if [ "$BUCKET_EXISTS" = "true" ] && [ "$DYNAMODB_EXISTS" = "true" ]; then
-              echo "Both S3 bucket and DynamoDB table exist. Skipping Terraform init."
-          elif [ "$BUCKET_EXISTS" = "access denied" ] || [ "$DYNAMODB_EXISTS" = "access denied" ]; then
-              echo "Access denied when checking resources. Please check your AWS credentials and permissions."
-              exit 1
-          else
-              echo "Initializing Terraform because one or more resources do not exist."
-              terraform init
-              terraform plan
-              terraform apply -auto-approve
-          fi
-
-          */
+          
 
           # Terraform 초기화 및 적용
           if [ "$BUCKET_EXISTS" = "true" ]; then
