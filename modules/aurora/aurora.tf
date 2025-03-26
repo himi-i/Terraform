@@ -1,7 +1,6 @@
 resource "aws_rds_cluster" "rds-cluster" {
   cluster_identifier              = lower("aws-rds-cluster-dev-hm-aurora-hm-db")
   engine                          = var.engine #"aurora-mysql"
-  engine_version                  = var.engine_version #"8.mysql_aurora"
   availability_zones              = [element(var.az, 0), element(var.az, 1)]
   db_subnet_group_name            = aws_db_subnet_group.rds-subnet-group.id
   database_name                   = "${var.dbname}db"
@@ -19,7 +18,7 @@ resource "aws_rds_cluster" "rds-cluster" {
   enabled_cloudwatch_logs_exports     = var.enabled_cloudwatch_logs_exports
 
   lifecycle {
-    ignore_changes = [availability_zones, engine_version, snapshot_identifier, kms_key_id]
+    ignore_changes = [availability_zones, snapshot_identifier, kms_key_id]
   }
   tags = var.tags
 }
@@ -29,14 +28,13 @@ resource "aws_rds_cluster_instance" "rds-instance" {
   identifier                  = lower("aws-rds-instance-dev-hm-aurora-hmdb-${count.index}")
   cluster_identifier          = aws_rds_cluster.rds-cluster.id
   engine                     = var.engine
-  engine_version             = var.engine_version
   instance_class             = var.rds_instance_class
 #  db_parameter_group_name    = aws_db_parameter_group.rds-instance-parameter-group.name
   auto_minor_version_upgrade = var.rds_instance_auto_minor_version_upgrade
   publicly_accessible        = var.rds_instance_publicly_accessible
   # monitoring_role_arn        = var.monitoring_role_arn
   lifecycle {
-    ignore_changes = [engine_version,monitoring_interval]
+    ignore_changes = [monitoring_interval]
   }
 }
 

@@ -4,7 +4,6 @@
   allocated_storage    = 20
   db_name             = "terraformdb"
   engine              = "mysql"
-  engine_version      = "8.0"
   instance_class      = "db.t3.medium"
   username            = "admin"
   password            = "password"  # 비밀번호는 환경 변수나 AWS Secrets Manager로 관리해야 합니다.
