@@ -13,14 +13,9 @@ resource "aws_rds_cluster" "rds-cluster" {
   deletion_protection             = true
   storage_encrypted               = true
   #kms_key_id                      = var.kms_key_id
-
+  
   # 조건문으로 null일 때 속성 생략
-  dynamic "kms_key_id" {
-    for_each = var.kms_key_id != null ? [1] : []
-    content {
-      kms_key_id = var.kms_key_id
-    }
-  }
+  kms_key_id        = var.kms_key_id != null ? var.kms_key_id : null
   
   skip_final_snapshot              = true
   port                            = var.port #default 3306
