@@ -1,5 +1,5 @@
 # MySQL RDS 인스턴스 생성
-/*
+
   resource "aws_db_instance" "terraform_db" {
   allocated_storage    = 20
   db_name             = "terraformdb"
@@ -19,7 +19,7 @@
     Name = "Terraform-MySQL-DB"
   }
 }
-*/
+
 
 # S3 버킷 생성
 resource "aws_s3_bucket" "terraform_state" { 
@@ -27,7 +27,7 @@ resource "aws_s3_bucket" "terraform_state" {
   force_destroy = true
 }
 
-/*
+
 # MySQL 테이블을 사용하여 상태 잠금 관리
 resource "null_resource" "create_lock_table" {
   depends_on = [aws_db_instance.terraform_db]
@@ -44,7 +44,7 @@ resource "null_resource" "create_lock_table" {
     "
   }
 }
-*/
+
 
 # S3 버킷에 대한 버전 관리 활성화
 resource "aws_s3_bucket_versioning" "enabled" { 
@@ -106,7 +106,7 @@ terraform {
     key    = "stage/terraform/terraform.tfstate"
     region = "ap-northeast-2"
   }
-/*
+
   backend "mysql" {
     host     = aws_db_instance.terraform_db.endpoint
     port     = 3306
@@ -115,5 +115,5 @@ terraform {
     database = "terraform_state"
     table    = "locks"
   }
-  */
+  
 }
