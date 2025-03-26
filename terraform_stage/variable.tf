@@ -8,12 +8,12 @@ variable "stage" {
 }
 variable "servicename" {
   type = string
-  default = "terraform_jung9546"
+  default = "terraform_hm"
 }
 variable "tags" {
   type = map(string)
   default = {
-    "name" = "jung9546_VPC"
+    "name" = "hm_VPC"
   }
 }
 
@@ -24,35 +24,44 @@ variable "az" {
 }
 variable "vpc_ip_range" {
   type = string
-  default = "10.2.92.0/24"
+  default = "192.168.0.0/16"
 }
 
 variable "subnet_public_az1" {
   type = string
-  default = "10.2.92.0/27"
+  default = "192.168.0.0/24"
 }
 variable "subnet_public_az2" {
   type = string
-  default = "10.2.92.32/27"
+  default = "192.168.1.0/24"
 }
 
 variable "subnet_service_az1" {
   type = string
-  default = "10.2.92.64/26"
+  default = "192.168.2.0/24"
 }
 variable "subnet_service_az2" {
   type = string
-  default = "10.2.92.128/26"
+  default = "192.168.3.0/24"
+}
+
+variable "subnet_service2_az1" {
+  type = string
+  default = "192.168.4.0/24"
+}
+variable "subnet_service2_az2" {
+  type = string
+  default = "192.168.5.0/24"
 }
 
 variable "subnet_db_az1" {
   type = string
-  default = "10.2.92.192/27"
+  default = "192.168.6.0/24"
 }
 
 variable "subnet_db_az2" {
   type = string
-  default = "10.2.92.224/27"
+  default = "192.168.7.0/24"
 }
 # variable "create_tgw" {
 #   type = bool
@@ -100,15 +109,17 @@ variable "instance_ebs_volume" {
 ##RDS
 variable "rds_dbname" {
   type = string
-  default = "jung9546"
+  default = "hm"
 }
 variable "rds_instance_count" {
   type = string
   default = "2"
 }
+
+##나중에 개발자 ip 추가
 variable "sg_allow_ingress_list_aurora"{
   type = list
-  default = ["10.2.92.64/26", "10.2.92.128/26", "10.2.92.18/32"]
+  default = ["192.168.4.0/24", "192.168.5.0/24", ""]
 }
 variable "associate_public_ip_address" {
   type = bool

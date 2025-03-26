@@ -26,22 +26,17 @@ module "vpc" {
   subnet_public_az2 = var.subnet_public_az2
   subnet_service_az1 = var.subnet_service_az1
   subnet_service_az2 = var.subnet_service_az2
+  subnet_service2_az1 = var.subnet_service2_az1
+  subnet_service2_az2 = var.subnet_service2_az2
   subnet_db_az1  = var.subnet_db_az1
   subnet_db_az2  = var.subnet_db_az2
  
   ##SecurityGroup
   #sg_allow_comm_list = concat(var.ext_sg_allow_list, ["${module.vpc.nat_ip}/32", var.vpc_ip_range])
 
-  ##TGW
-  #create_tgw = var.create_tgw
-  #tgw_sharing_accounts = var.tgw_sharing_accounts
-#   ext_vpc_route = var.ext_vpc_route
-  #security_attachments = var.security_attachments
-  #auto_accept_shared_attachments = true
-  #security_attachments_propagation = merge(var.security_attachments_propagation, var.security_attachments)
 }
 
-# module "jung9546-ec2" {
+# module "hm-ec2" {
 #   source              = "../modules/instance"
 
 #   stage        = var.stage
