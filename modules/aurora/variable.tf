@@ -37,6 +37,7 @@ variable "backup_window"{
 }
 variable "kms_key_id" { #required
   type = string
+  default = null  # optional 처리
 }
 variable "enabled_cloudwatch_logs_exports" {
   type = list
