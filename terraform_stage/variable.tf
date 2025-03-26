@@ -119,7 +119,7 @@ variable "rds_instance_count" {
 ##나중에 개발자 ip 추가
 variable "sg_allow_ingress_list_aurora"{
   type = list
-  default = ["192.168.4.0/24", "192.168.5.0/24", ""]
+  default = ["192.168.4.0/24", "192.168.5.0/24"]
 }
 variable "associate_public_ip_address" {
   type = bool
