@@ -31,6 +31,13 @@ variable "subnet_service_az2" {
   type = string
 }
 
+variable "subnet_service2_az1" {
+  type = string
+}
+variable "subnet_service2_az2" {
+  type = string
+}
+
 variable "subnet_db_az1" {
   type = string
 }
