@@ -12,7 +12,7 @@ resource "aws_rds_cluster" "rds-cluster" {
   vpc_security_group_ids          = [aws_security_group.sg-aurora.id]
   deletion_protection             = true
   storage_encrypted               = true
-  kms_key_id                      = var.kms_key_id
+  #kms_key_id                      = var.kms_key_id
   skip_final_snapshot              = true
   port                            = var.port #default 3306
   enabled_cloudwatch_logs_exports     = var.enabled_cloudwatch_logs_exports
