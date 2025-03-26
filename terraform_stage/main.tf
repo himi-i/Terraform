@@ -16,7 +16,6 @@ module "vpc" {
   stage       = var.stage
   servicename = var.servicename
   tags        = var.tags
-  # region     = var.region
   # kms_arn = var.s3_kms_key_id
 
   vpc_ip_range = var.vpc_ip_range
@@ -47,7 +46,7 @@ module "vpc" {
 #   instance_type             = var.instance_type
 #   ebs_size                  = var.instance_ebs_size
 #   #user_data                 = var.instance_user_data
-#   kms_key_id                = var.ebs_kms_key_id
+#   #kms_key_id                = var.ebs_kms_key_id
 #   ec2-iam-role-profile-name = module.iam-service-role.ec2-iam-role-profile.name
 #   ssh_allow_comm_list       = [var.subnet_service_az1, var.subnet_service_az2]
 
@@ -118,7 +117,7 @@ module "rds" {
   az             = var.az
 
   rds_instance_count = var.rds_instance_count
-  kms_key_id         = var.rds_kms_arn
+  #kms_key_id         = var.rds_kms_arn
 
   depends_on = [module.vpc]
 }
